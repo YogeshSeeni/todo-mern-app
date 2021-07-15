@@ -2,6 +2,7 @@ const router = require("express").Router();
 const User = require("../models/User");
 const { registerValidation } = require("../models/Validations");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 router.post("/register", async (req, res) => {
   const { error } = registerValidation(req.body);
@@ -27,8 +28,23 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/login", (req, res) => {
-  res.send("Login route");
+router.post("/login", async (req, res) => {
+  const existingUser = await User.findOne({ email: req.body.email });
+  if (!existingUser) {
+    res.send("Email does not exist");
+  }
+  const validPassword = await bcrypt.compare(
+    req.body.password,
+    existingUser.password
+  );
+  if (validPassword) {
+    const token = jwt.sign({ _id: existingUser._id }, process.env.JWT_SECRET);
+    res.send({
+      token: token,
+    });
+  } else {
+    res.send("Invalid Password");
+  }
 });
 
 module.exports = router;

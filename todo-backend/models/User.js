@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
   },
   todos: {
     type: Array,
-    default: [{ completed: false, text: "Sample Todo" }],
+    default: [],
   },
 });
 

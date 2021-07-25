@@ -2,12 +2,14 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+var cors = require("cors");
 
 const authRoutes = require("./routes/auth");
 const todoRoutes = require("./routes/todo");
 
 require("dotenv").config();
 const port = process.env.PORT || 5000;
+app.use(cors());
 
 mongoose.connect(
   process.env.DB_CONNECT,
@@ -29,6 +31,10 @@ const jwtVerify = (req, res, next) => {
     res.status(400).send("Invalid token");
   }
 };
+
+app.get("/", (req, res) => {
+  res.send("MERN App Backend");
+});
 
 app.use(express.json());
 app.use("/api/user", authRoutes);

@@ -27,3 +27,16 @@ export const loginUser = async (email, password) => {
     return [false, e.response.data];
   }
 };
+
+export const verifyToken = async (token) => {
+  const headers = {
+    "Content-Type": "application/json",
+    "auth-token": token,
+  };
+  try {
+    const res = await axios.get(API_URL + "verifytoken", { headers: headers });
+    return true;
+  } catch (e) {
+    return false;
+  }
+};

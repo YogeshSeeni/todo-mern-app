@@ -36,6 +36,18 @@ app.get("/", (req, res) => {
   res.send("MERN App Backend");
 });
 
+app.get("/verifytoken", (req, res) => {
+  const token = req.header("auth-token");
+  if (!token) return res.status(401).send("Access Denied");
+
+  try {
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    res.send("Valid");
+  } catch (err) {
+    res.status(400).send("Invalid");
+  }
+});
+
 app.use(express.json());
 app.use("/api/user", authRoutes);
 app.use("/todo", jwtVerify, todoRoutes);

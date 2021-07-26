@@ -1,18 +1,15 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useParams,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Cookies from "universal-cookie";
 import ViewTodos from "./components/ViewTodos";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import AddTodo from "./components/AddTodo";
+import Logout from "./components/Logout";
 
 function App() {
+  const cookies = new Cookies();
+
   return (
     <Router>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -32,30 +29,43 @@ function App() {
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/">
-                  Todos
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/addtodo">
-                  Add Todos
-                </a>
-              </li>
-            </ul>
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="/login">
-                  Login
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/signup">
-                  Signup
-                </a>
-              </li>
-            </ul>
+            {cookies.get("token") != undefined ? (
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="/">
+                    Todos
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/addtodo">
+                    Add Todos
+                  </a>
+                </li>
+              </ul>
+            ) : null}
+            {cookies.get("token") == undefined ? (
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="/login">
+                    Login
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/signup">
+                    Signup
+                  </a>
+                </li>
+              </ul>
+            ) : null}
+            {cookies.get("token") != undefined ? (
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="/logout">
+                    Logout
+                  </a>
+                </li>
+              </ul>
+            ) : null}
           </div>
         </div>
       </nav>
@@ -65,6 +75,9 @@ function App() {
         </Route>
         <Route path="/signup">
           <SignUp />
+        </Route>
+        <Route path="/logout">
+          <Logout />
         </Route>
         <Route path="/addtodo">
           <AddTodo />

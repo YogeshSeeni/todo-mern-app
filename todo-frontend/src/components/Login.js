@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { loginUser } from "../APIFunctions";
 import Cookies from "universal-cookie";
+import { useHistory } from "react-router-dom";
 
 export default function Login() {
   const [successMessage, setSuccessMessage] = useState("");
@@ -11,6 +12,11 @@ export default function Login() {
   const [rememberMe, setRememberMe] = useState(false);
 
   const cookies = new Cookies();
+  const history = useHistory();
+
+  if (cookies.get("token") != undefined) {
+    history.push("/");
+  }
 
   const handleSubmit = async () => {
     const res = await loginUser(email, password);
@@ -24,6 +30,7 @@ export default function Login() {
       setFailureMessage("");
       setSuccessMessage("Logged In");
       cookies.set("token", res[1], { path: "/", expires: date });
+      window.location.reload();
     } else {
       setSuccessMessage("");
       setFailureMessage(await res[1]);

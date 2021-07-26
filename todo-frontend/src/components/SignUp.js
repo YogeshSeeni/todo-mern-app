@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { registerUser } from "../APIFunctions";
+import Cookies from "universal-cookie";
+import { useHistory } from "react-router";
 
 export default function SignUp() {
   const [successMessage, setSuccessMessage] = useState("");
@@ -8,6 +10,13 @@ export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const cookies = new Cookies();
+  const history = useHistory();
+
+  if (cookies.get("token") != undefined) {
+    history.push("/");
+  }
 
   const handleSubmit = async () => {
     let response = await registerUser(name, email, password);

@@ -5,24 +5,20 @@ export default function SignUp() {
   const [successMessage, setSuccessMessage] = useState("");
   const [failureMessage, setFailureMessage] = useState("");
 
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const handleSubmit = async () => {
-    if (Boolean(name) && Boolean(email) && Boolean(password)) {
-      let response = await registerUser(name, email, password);
-      if ((await response) == "Success") {
-        setFailureMessage("");
-        setSuccessMessage(await response);
-      } else {
-        console.log(response);
-        setFailureMessage(await response);
-      }
+    let response = await registerUser(name, email, password);
+    if ((await response) == "Success") {
+      setFailureMessage("");
+      setSuccessMessage(await response);
     } else {
-      setFailureMessage("Fill out All fields");
+      setSuccessMessage("");
+      setFailureMessage(await response);
     }
   };
-
-  let name = "";
-  let email = "";
-  let password = "";
 
   return (
     <div class="container">
@@ -43,7 +39,8 @@ export default function SignUp() {
           type="text"
           class="form-control"
           placeholder="Enter name"
-          onChange={(e) => (name = e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
       </div>
       <div class="form-group">
@@ -52,7 +49,8 @@ export default function SignUp() {
           type="email"
           class="form-control"
           placeholder="Enter email"
-          onChange={(e) => (email = e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </div>
       <div class="form-group">
@@ -61,7 +59,8 @@ export default function SignUp() {
           type="password"
           class="form-control"
           placeholder="Enter password"
-          onChange={(e) => (password = e.target.value)}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
       </div>
       <div class="form-group">

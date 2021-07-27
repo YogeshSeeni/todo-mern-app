@@ -5,3 +5,12 @@
 .container {
   margin-top: 2rem;
 }
+
+.deletetodo {
+  float: right;
+}
+
+.edittodo {
+  float: right;
+  margin-right: 1rem;
+}

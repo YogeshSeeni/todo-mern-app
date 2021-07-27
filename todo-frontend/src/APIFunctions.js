@@ -30,7 +30,6 @@ export const loginUser = async (email, password) => {
 
 export const verifyToken = async (token) => {
   const headers = {
-    "Content-Type": "application/json",
     "auth-token": token,
   };
   try {
@@ -38,5 +37,19 @@ export const verifyToken = async (token) => {
     return true;
   } catch (e) {
     return false;
+  }
+};
+
+export const getTodos = async (token) => {
+  const headers = {
+    "auth-token": token,
+  };
+  try {
+    const res = await axios.get(API_URL + "todo/gettodos", {
+      headers: headers,
+    });
+    return [true, res.data];
+  } catch (e) {
+    return [false, e.response.data];
   }
 };

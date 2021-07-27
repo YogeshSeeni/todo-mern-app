@@ -53,3 +53,20 @@ export const getTodos = async (token) => {
     return [false, e.response.data];
   }
 };
+
+export const addTodo = async (token, text) => {
+  const headers = {
+    "auth-token": token,
+  };
+  const body = {
+    body: text,
+  };
+  try {
+    const res = await axios.post(API_URL + "todo/addtodo", body, {
+      headers: headers,
+    });
+    return true;
+  } catch (e) {
+    return false;
+  }
+};

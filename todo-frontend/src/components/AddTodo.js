@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { verifyToken } from "../APIFunctions";
+import { addTodo } from "../APIFunctions";
 
 export default function AddTodo() {
   const cookies = new Cookies();
@@ -22,5 +23,49 @@ export default function AddTodo() {
     validation();
   }, []);
 
-  return <div>Add Todo Screen</div>;
+  const [successMessage, setSuccessMessage] = useState("");
+  const [failureMessage, setFailureMessage] = useState("");
+
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = async () => {
+    const res = await addTodo(cookies.get("token"), message);
+    if ((await res) == true) {
+      setFailureMessage("");
+      setSuccessMessage(`Added todo with message: "${message}"`);
+    } else {
+      setSuccessMessage("");
+      setFailureMessage("Could not add todo.");
+    }
+  };
+
+  return (
+    <div class="container">
+      {successMessage ? (
+        <div class="alert alert-success" role="alert">
+          {successMessage}
+        </div>
+      ) : null}
+      {failureMessage ? (
+        <div class="alert alert-danger" role="alert">
+          {failureMessage}
+        </div>
+      ) : null}
+      <div class="form-group">
+        <label>Add Todo:</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter todo"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" onClick={handleSubmit}>
+          Add Todo!
+        </button>
+      </div>
+    </div>
+  );
 }

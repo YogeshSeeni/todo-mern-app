@@ -70,3 +70,39 @@ export const addTodo = async (token, text) => {
     return false;
   }
 };
+
+export const deleteTodo = async (token, id) => {
+  const headers = {
+    "auth-token": token,
+  };
+  const body = {
+    id: id,
+  };
+  try {
+    const res = await axios.delete(API_URL + "todo/deletetodo", {
+      data: body,
+      headers: headers,
+    });
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const editTodo = async (token, id, text) => {
+  const headers = {
+    "auth-token": token,
+  };
+  const body = {
+    id: id,
+    body: text,
+  };
+  try {
+    const res = await axios.put(API_URL + "todo/updatetodo", body, {
+      headers: headers,
+    });
+    return true;
+  } catch (e) {
+    return false;
+  }
+};

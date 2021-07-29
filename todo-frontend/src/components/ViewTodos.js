@@ -51,7 +51,6 @@ export default function ViewTodos() {
             <div class="card-header">Your Todos:</div>
             <ul class="list-group list-group-flush">
               {todos[1].map((data, index) => {
-                console.log(data);
                 return (
                   <Todo
                     body={data.body}

@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "http://localhost:5000/";
+const API_URL = "https://mern-todos-api.herokuapp.com/";
 
 export const registerUser = async (name, email, password) => {
   const body = {

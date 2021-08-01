@@ -18,7 +18,8 @@ export default function SignUp() {
     history.push("/");
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     let response = await registerUser(name, email, password);
     if ((await response) == "Success") {
       setFailureMessage("");
@@ -42,41 +43,43 @@ export default function SignUp() {
         </div>
       ) : null}
       <h2>Sign Up Page</h2>
-      <div class="form-group">
-        <label>Name:</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Enter name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
-      <div class="form-group">
-        <label>Email:</label>
-        <input
-          type="email"
-          class="form-control"
-          placeholder="Enter email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-      <div class="form-group">
-        <label>Password:</label>
-        <input
-          type="password"
-          class="form-control"
-          placeholder="Enter password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary" onClick={handleSubmit}>
-          Sign Up!
-        </button>
-      </div>
+      <form>
+        <div class="form-group">
+          <label>Name:</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div class="form-group">
+          <label>Email:</label>
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div class="form-group">
+          <label>Password:</label>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary" onClick={handleSubmit}>
+            Sign Up!
+          </button>
+        </div>
+      </form>
     </div>
   );
 }

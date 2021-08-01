@@ -18,7 +18,8 @@ export default function Login() {
     history.push("/");
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const res = await loginUser(email, password);
     const date = new Date();
     if (rememberMe) {
@@ -50,40 +51,42 @@ export default function Login() {
         </div>
       ) : null}
       <h2>Login Page</h2>
-      <div class="form-group">
-        <label>Email:</label>
-        <input
-          type="email"
-          class="form-control"
-          placeholder="Enter email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-      <div class="form-group">
-        <label>Password:</label>
-        <input
-          type="password"
-          class="form-control"
-          placeholder="Enter password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <div class="form-group">
-        <div class="form-check">
+      <form>
+        <div class="form-group">
+          <label>Email:</label>
           <input
-            type="checkbox"
-            class="form-check-input"
-            checked={rememberMe}
-            onChange={() => setRememberMe(!rememberMe)}
+            type="email"
+            class="form-control"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
-          <label class="form-check-label">Remember Me</label>
         </div>
-        <button type="submit" class="btn btn-primary" onClick={handleSubmit}>
-          Login!
-        </button>
-      </div>
+        <div class="form-group">
+          <label>Password:</label>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div class="form-group">
+          <div class="form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              checked={rememberMe}
+              onChange={() => setRememberMe(!rememberMe)}
+            />
+            <label class="form-check-label">Remember Me</label>
+          </div>
+          <button type="submit" class="btn btn-primary" onClick={handleSubmit}>
+            Login!
+          </button>
+        </div>
+      </form>
     </div>
   );
 }

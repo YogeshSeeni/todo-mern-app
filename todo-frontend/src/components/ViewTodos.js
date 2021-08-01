@@ -42,27 +42,31 @@ export default function ViewTodos() {
           {errorMessage}
         </div>
       ) : null}
-      <h1>Hello There,</h1>
-      <div class="card">
-        {loading ? (
-          <h1>Loading</h1>
-        ) : (
-          <div>
-            <div class="card-header">Your Todos:</div>
-            <ul class="list-group list-group-flush">
-              {todos[1].map((data, index) => {
-                return (
-                  <Todo
-                    body={data.body}
-                    id={data.id}
-                    completion={data.completion}
-                  />
-                );
-              })}
-            </ul>
+      {loading ? (
+        <div class="spinner-border text-primary view-loading" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      ) : (
+        <div>
+          <h1>Hello There,</h1>
+          <div class="card">
+            <div>
+              <div class="card-header">Your Todos:</div>
+              <ul class="list-group list-group-flush">
+                {todos[1].map((data, index) => {
+                  return (
+                    <Todo
+                      body={data.body}
+                      id={data.id}
+                      completion={data.completion}
+                    />
+                  );
+                })}
+              </ul>
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

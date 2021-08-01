@@ -28,7 +28,12 @@ export default function AddTodo() {
 
   const [message, setMessage] = useState("");
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (message == "") {
+      setFailureMessage("Message cannot be empty");
+      return;
+    }
     const res = await addTodo(cookies.get("token"), message);
     if ((await res) == true) {
       setFailureMessage("");
@@ -51,21 +56,23 @@ export default function AddTodo() {
           {failureMessage}
         </div>
       ) : null}
-      <div class="form-group">
-        <label>Add Todo:</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Enter todo"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary" onClick={handleSubmit}>
-          Add Todo!
-        </button>
-      </div>
+      <form>
+        <div class="form-group">
+          <label>Add Todo:</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter todo"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary" onClick={handleSubmit}>
+            Add Todo!
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
